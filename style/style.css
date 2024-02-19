@@ -6,3 +6,24 @@
 .font-inter{
     font-family: "Inter", sans-serif;
 }
+
+.half-circle-b{
+    width: 30px;
+    height: 30px; /* as the half of the width */
+    background-color: white;
+    border-top-left-radius: 70px;  /* 100px of height + 10px of border */
+    border-top-right-radius: 70px; /* 100px of height + 10px of border */
+    border-bottom: 0;
+}
+.half-circle-t{
+    width: 30px;
+    height: 30px; /* as the half of the width */
+    background-color: white;
+    border-bottom-left-radius: 70px;  /* 100px of height + 10px of border */
+    border-bottom-right-radius: 70px; /* 100px of height + 10px of border */
+    border-top: 0;
+}
+.vl {
+    border-left: 2px dashed white;
+    height: 100px;
+  }
