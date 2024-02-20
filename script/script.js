@@ -2,6 +2,8 @@ function makeGreen() {
     document.getElementById('A1').style.backgroundColor = '#1DD100'
 }
 function priceShow(event) {
+    document.getElementById(event).setAttribute('disabled',true)
+    document.getElementById(event).style.backgroundColor = '#1DD100'
     let container = document.createElement('div')
     document.getElementById('price-show').appendChild(container)
     container.setAttribute('class', 'flex justify-between')
@@ -24,76 +26,78 @@ function priceShow(event) {
         amount = parseInt(price.innerText)
         total = total + amount
     }
+    // selected seat
+    let seatSelected=parseInt(total)/550
+    console.log(seatSelected)
+    document.getElementById('selected-seat').innerText=seatSelected
+    // seat left
+    seatLeft=40-seatSelected
+    document.getElementById('seat-left').innerText=seatLeft
+    // enable next button
     document.getElementById('sum').innerText = total
     console.log(total)
-    let number = parseInt(document.getElementById('number').value)
-    console.log(typeof number)
-    if (parseInt(total)> 0 && number > 0) {
+    let numbers = parseInt(document.getElementById('number').value)
+    console.log(numbers)
+    if (parseInt(total) > 0 && numbers > 0 ) {
         document.getElementById('next').removeAttribute('disabled')
     }
     else {
         document.getElementById('next').setAttribute('disabled', true)
         console.log('hi')
     }
+    // enable coupon
+    if(parseInt(total)>2000){
+        document.getElementById('coupon-apply').removeAttribute('disabled')
+    }
+    // stop black-market
+    if(parseInt(total)==2200){
+        let black= document.querySelectorAll('li')
+        for(let i=0; i<black.length;i++){
+            black[i].setAttribute('disabled',true)
+        }
+    }
+    
 }
+// discount
+document.getElementById('token').addEventListener('keyup',function(){
+    let token=document.getElementById('token').value
+    let total=parseInt(document.getElementById('sum').innerText)
+    let percentage=0
+    if(token=='New15' && total>2000){
+        percentage=document.getElementById('percent')
+        percentage.innerText=total*(0.15)
+        document.getElementById('discount').innerText='15%'
+    }
+    else if(token=='couple 20' && total>2000){
+        percentage=document.getElementById('percent')
+        percentage.innerText=total*(0.2)
+        document.getElementById('discount').innerText='20%'
+    }
+})
+// Grand total
+document.getElementById('coupon-apply').addEventListener('click',function(){
+    let token=document.getElementById('token').value
+    let total=parseInt(document.getElementById('sum').innerText)
+    let percentage=parseInt(document.getElementById('percent').innerText)
+    let grandTotal=total-percentage
+    document.getElementById('grand-total').innerText=grandTotal
+})
 
-document.getElementById('number').addEventListener('keydown', function (event) {
-    let number = event.target.value.length
+
+document.getElementById('number').addEventListener('keyup', function (event) {
+    let number = parseInt(event.target.value)
+    let numberLength = number.length
     let total = parseInt(document.getElementById('sum').innerText)
-    console.log(typeof total)
-    if (number >= 0 && total > 0) {
+    console.log(typeof number)
+    if (numberLength >= 0 && total > 0 ) {
         document.getElementById('next').removeAttribute('disabled')
     }
     else {
         document.getElementById('next').setAttribute('disabled', true)
     }
 })
-// document.getElementById('A1').addEventListener('click',function(){
-//     {
-//         let container = document.createElement('div')
-//         document.getElementById('price-show').appendChild(container)
-//         container.setAttribute('class', 'flex justify-between')
-    
-//         let seatElement = document.createElement('p')
-//         seatElement.innerText = event
-//         container.appendChild(seatElement)
-//         let classElement = document.createElement('p')
-//         classElement.innerText = 'Economy'
-//         container.appendChild(classElement)
-//         let priceElement = document.createElement('p')
-//         priceElement.innerText = 550
-//         priceElement.setAttribute('class', 'prices')
-//         container.appendChild(priceElement)
-//         console.log(document.getElementById('price-show').innerHTML)
-//         // total
-//         let prices = document.getElementsByClassName('prices')
-//         let total = 0
-//         for (let price of prices) {
-//             amount = parseInt(price.innerText)
-//             total = total + amount
-//         }
-//         document.getElementById('sum').innerText = total
-//         console.log(total)
-//         let number = parseInt(document.getElementById('number').value)
-//         console.log(typeof number)
-//         if (parseInt(total)> 0 && number > 0) {
-//             document.getElementById('next').removeAttribute('disabled')
-//         }
-//         else {
-//             document.getElementById('next').setAttribute('disabled', true)
-//             console.log('hi')
-//         }
-//     }
-// })
-// document.getElementById('A1').addEventListener('click',function(event){
-//     let number=document.getElementById('number').target.value.length
-//     console.log(number)
-//     // let total=parseInt(document.getElementById('sum').innerText)
-//     // console.log(typeof total)
-//     // if(number>=0 && total>0){
-//     //     document.getElementById('next').removeAttribute('disabled')
-//     // }
-//     // else{
-//     //     document.getElementById('next').setAttribute('disabled',true)
-//     // }
-// })
+document.getElementById('next').addEventListener('click',function(){
+    document.getElementById('continue').removeAttribute('hidden')
+    document.getElementById('main').setAttribute('hidden',true)
+    document.getElementById('footer').setAttribute('hidden',true)
+})
