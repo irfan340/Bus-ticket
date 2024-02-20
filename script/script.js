@@ -56,8 +56,22 @@ function priceShow(event) {
             black[i].setAttribute('disabled',true)
         }
     }
-    
 }
+// console.log(parseInt(document.getElementById('sum').innerText))
+// enable key
+document.getElementById('number').addEventListener('keyup', function () {
+    let numbers = document.getElementById('number').value
+    let numberLength = numbers.length
+    let total = parseInt(document.getElementById('sum').innerText)
+    console.log(typeof numberLength)
+    if (numberLength > 0 && total > 0 ) {
+        document.getElementById('next').removeAttribute('disabled')
+    }
+    else {
+        document.getElementById('next').setAttribute('disabled', true)
+        console.log('nope')
+    }
+})
 // discount
 document.getElementById('token').addEventListener('keyup',function(){
     let token=document.getElementById('token').value
@@ -68,7 +82,7 @@ document.getElementById('token').addEventListener('keyup',function(){
         percentage.innerText=total*(0.15)
         document.getElementById('discount').innerText='15%'
     }
-    else if(token=='couple 20' && total>2000){
+    else if(token=='Couple 20' && total>2000){
         percentage=document.getElementById('percent')
         percentage.innerText=total*(0.2)
         document.getElementById('discount').innerText='20%'
@@ -82,20 +96,7 @@ document.getElementById('coupon-apply').addEventListener('click',function(){
     let grandTotal=total-percentage
     document.getElementById('grand-total').innerText=grandTotal
 })
-
-
-document.getElementById('number').addEventListener('keyup', function (event) {
-    let number = parseInt(event.target.value)
-    let numberLength = number.length
-    let total = parseInt(document.getElementById('sum').innerText)
-    console.log(typeof number)
-    if (numberLength >= 0 && total > 0 ) {
-        document.getElementById('next').removeAttribute('disabled')
-    }
-    else {
-        document.getElementById('next').setAttribute('disabled', true)
-    }
-})
+// successful
 document.getElementById('next').addEventListener('click',function(){
     document.getElementById('continue').removeAttribute('hidden')
     document.getElementById('main').setAttribute('hidden',true)
